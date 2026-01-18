@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@fontsource/cascadia-mono';
+
+/* PowerShell Terminal Design System */
+
+@layer base {
+  :root {
+    /* Terminal colors - PowerShell dark theme */
+    --background: 225 15% 8%;
+    --foreground: 0 0% 85%;
+    
+    --terminal-black: 225 15% 8%;
+    --terminal-blue: 199 89% 48%;
+    --terminal-cyan: 180 100% 45%;
+    --terminal-green: 120 100% 40%;
+    --terminal-yellow: 45 100% 50%;
+    --terminal-magenta: 300 100% 50%;
+    --terminal-red: 0 100% 50%;
+    --terminal-white: 0 0% 100%;
+    --terminal-gray: 0 0% 60%;
+    
+    /* Command prompt colors */
+    --prompt-path: 199 89% 55%;
+    --prompt-symbol: 0 0% 70%;
+    --command-text: 180 100% 60%;
+    --output-text: 0 0% 80%;
+    --output-highlight: 120 100% 50%;
+    --output-accent: 45 100% 55%;
+    --output-link: 199 89% 65%;
+    
+    /* UI tokens */
+    --card: 225 15% 10%;
+    --card-foreground: 0 0% 85%;
+    --popover: 225 15% 10%;
+    --popover-foreground: 0 0% 85%;
+    --primary: 180 100% 45%;
+    --primary-foreground: 225 15% 8%;
+    --secondary: 225 15% 15%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 225 15% 18%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 225 15% 20%;
+    --input: 225 15% 15%;
+    --ring: 180 100% 45%;
+    --radius: 0rem;
+
+    --sidebar-background: 225 15% 8%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 180 100% 45%;
+    --sidebar-primary-foreground: 225 15% 8%;
+    --sidebar-accent: 225 15% 15%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 225 15% 20%;
+    --sidebar-ring: 180 100% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Cascadia Mono', 'Consolas', 'Courier New', monospace;
+  }
+
+  ::selection {
+    background: hsl(var(--terminal-cyan) / 0.3);
+    color: hsl(var(--terminal-white));
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--terminal-gray) / 0.4);
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--terminal-gray) / 0.6);
+  }
+}
+
+@layer components {
+  /* Terminal window styling */
+  .terminal-window {
+    @apply bg-background min-h-screen p-4 md:p-8;
+  }
+
+  /* Command prompt styling */
+  .prompt {
+    @apply flex items-start gap-1 mb-1;
+  }
+
+  .prompt-path {
+    color: hsl(var(--prompt-path));
+  }
+
+  .prompt-symbol {
+    color: hsl(var(--prompt-symbol));
+  }
+
+  .command {
+    color: hsl(var(--command-text));
+  }
+
+  /* Output styling */
+  .output {
+    color: hsl(var(--output-text));
+    @apply pl-0 mb-6;
+  }
+
+  .output-highlight {
+    color: hsl(var(--output-highlight));
+  }
+
+  .output-accent {
+    color: hsl(var(--output-accent));
+  }
+
+  .output-cyan {
+    color: hsl(var(--terminal-cyan));
+  }
+
+  .output-link {
+    color: hsl(var(--output-link));
+    @apply hover:underline cursor-pointer transition-all;
+  }
+
+  .output-muted {
+    color: hsl(var(--terminal-gray));
+  }
+
+  /* Section headers */
+  .section-header {
+    color: hsl(var(--output-accent));
+    @apply font-bold mb-2;
+  }
+
+  /* Skill badges */
+  .skill-tag {
+    @apply inline-block px-2 py-0.5 mr-2 mb-1;
+    background: hsl(var(--terminal-cyan) / 0.15);
+    color: hsl(var(--terminal-cyan));
+    border: 1px solid hsl(var(--terminal-cyan) / 0.3);
+  }
+
+  /* Timeline styling */
+  .timeline-item {
+    @apply relative pl-6 pb-6 border-l border-[hsl(var(--terminal-gray)/0.3)];
+  }
+
+  .timeline-item::before {
+    content: '';
+    @apply absolute left-[-4px] top-1 w-2 h-2 rounded-full;
+    background: hsl(var(--terminal-cyan));
+  }
+
+  /* Blinking cursor */
+  .cursor {
+    @apply inline-block w-2 h-5 ml-1;
+    background: hsl(var(--terminal-cyan));
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Typing animation */
+  .typing {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 0.5s steps(30, end);
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  /* Fade in animation for output */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Stagger animation delay utilities */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}
